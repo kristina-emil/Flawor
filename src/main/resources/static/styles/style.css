@@ -1,0 +1,12 @@
+body {
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+.container h1 {
+  color: #191970;
+  font-size: 200px;
+}
