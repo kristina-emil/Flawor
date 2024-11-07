@@ -2,7 +2,6 @@ package com.flavor.flavor.controller;
 
 import com.flavor.flavor.model.Recipe;
 import com.flavor.flavor.service.RecipeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +13,6 @@ public class RecipeController {
 
     private final RecipeService recipeService;
 
-    @Autowired
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
@@ -37,10 +35,5 @@ public class RecipeController {
     @DeleteMapping("/{id}")
     public void deleteRecipe(@PathVariable Long id) {
         recipeService.deleteRecipe(id);
-    }
-
-    @GetMapping("/search")
-    public List<Recipe> findRecipesByName(@RequestParam String name) {
-        return recipeService.findRecipesByName(name);
     }
 }
