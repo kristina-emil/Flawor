@@ -8,4 +8,4 @@ mvn spring-boot:run
 
 # URL сервера
 
-http://localhost:8083/api/hello
+http://localhost:8080
