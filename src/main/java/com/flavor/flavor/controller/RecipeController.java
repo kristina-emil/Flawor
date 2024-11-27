@@ -36,5 +36,19 @@ public class RecipeController {
     public void deleteRecipe(@PathVariable Long id) {
         recipeService.deleteRecipe(id);
     }
-    // TODO: implement method for updating Recipe
+
+    /**
+     * Эндпоинт для получения рецептов с пагинацией.
+     *
+     * @param offset количество записей, которые нужно пропустить.
+     * @param limit  количество записей, которые нужно вернуть.
+     * @return список рецептов.
+     */
+    @GetMapping("/paginated")
+    public List<Recipe> getRecipesWithPagination(
+            @RequestParam(defaultValue = "0") int offset,
+            @RequestParam(defaultValue = "20") int limit
+    ) {
+        return recipeService.getRecipesWithLimitOffset(offset, limit);
+    }
 }
