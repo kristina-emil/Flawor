@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const recipeTableBody = document.querySelector(".recipe-table tbody");
   
     // API URL
-    const API_URL = 'http://localhost:3000/recipes';
+    const API_URL = 'http://localhost:8080/recipes';
   
     // Fetch and display recipes
     const loadRecipes = async () => {
