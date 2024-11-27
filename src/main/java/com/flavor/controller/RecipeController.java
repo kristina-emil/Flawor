@@ -1,7 +1,8 @@
-package com.flavor.flavor.controller;
+package com.flavor.controller;
 
-import com.flavor.flavor.model.Recipe;
-import com.flavor.flavor.service.RecipeService;
+import com.flavor.model.Recipe;
+import com.flavor.service.RecipeService;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

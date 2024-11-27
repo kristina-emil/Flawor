@@ -1,4 +1,4 @@
-package com.flavor.flavor;
+package com.flavor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

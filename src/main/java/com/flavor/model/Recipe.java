@@ -1,4 +1,4 @@
-package com.flavor.flavor.model;
+package com.flavor.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

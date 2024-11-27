@@ -1,12 +1,112 @@
+/* General Styles */
 body {
-  background-color: lightgray;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  font-family: Arial, sans-serif;
   margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
 }
-.container h1 {
-  color: #191970;
-  font-size: 200px;
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-size: 100px;
+  color: #004578;
+}
+
+.controls button {
+  padding: 10px 20px;
+  font-size: 35px;
+  color: #fff;
+  background-color: #004578;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.controls button:hover {
+  background-color: #004578;
+}
+
+/* Hidden Class */
+.hidden {
+  display: none;
+}
+
+/* Recipe Table */
+.recipe-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.recipe-table th,
+.recipe-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.recipe-table th {
+  background-color: #004578;
+  color: #fff;
+}
+
+.recipe-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.recipe-table td:last-child {
+  display: flex;
+  gap: 10px;
+}
+
+/* Action Buttons */
+button.edit-btn {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.edit-btn:hover {
+  background-color: #218838;
+}
+
+button.delete-btn {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.delete-btn:hover {
+  background-color: #c82333;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #555;
 }

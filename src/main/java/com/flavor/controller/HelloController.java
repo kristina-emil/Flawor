@@ -1,4 +1,4 @@
-package com.flavor.flavor.controller;
+package com.flavor.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

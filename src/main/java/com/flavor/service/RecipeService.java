@@ -1,7 +1,8 @@
-package com.flavor.flavor.service;
+package com.flavor.service;
 
-import com.flavor.flavor.model.Recipe;
-import com.flavor.flavor.repository.RecipeRepository;
+import com.flavor.model.Recipe;
+import com.flavor.repository.RecipeRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
