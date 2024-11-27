@@ -1,7 +1,9 @@
 package com.flavor.controller;
 
+import com.flavor.model.Category;
 import com.flavor.model.Recipe;
 import com.flavor.service.RecipeService;
+import com.flavor.service.CategoryService;  // Для работы с категориями
 
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +15,11 @@ import java.util.Optional;
 public class RecipeController {
 
     private final RecipeService recipeService;
+    private final CategoryService categoryService;  // Для получения категорий
 
-    public RecipeController(RecipeService recipeService) {
+    public RecipeController(RecipeService recipeService, CategoryService categoryService) {
         this.recipeService = recipeService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping
@@ -30,7 +34,17 @@ public class RecipeController {
 
     @PostMapping
     public Recipe addRecipe(@RequestBody Recipe recipe) {
-        return recipeService.addRecipe(recipe);
+        if (recipe.getCategory() == null || recipe.getCategory().getId() == null) {
+            throw new RuntimeException("Не указана категория.");
+        }
+
+        Optional<Category> category = categoryService.getCategoryById(recipe.getCategory().getId());
+        if (category.isPresent()) {
+            recipe.setCategory(category.get());
+            return recipeService.addRecipe(recipe);
+        } else {
+            throw new RuntimeException("Категория не найдена.");
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -40,10 +54,6 @@ public class RecipeController {
 
     /**
      * Эндпоинт для получения рецептов с пагинацией.
-     *
-     * @param offset количество записей, которые нужно пропустить.
-     * @param limit  количество записей, которые нужно вернуть.
-     * @return список рецептов.
      */
     @GetMapping("/paginated")
     public List<Recipe> getRecipesWithPagination(

@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 
-
-
 import java.util.List;
 import java.util.Optional;
 
@@ -40,10 +38,6 @@ public class RecipeService {
 
     /**
      * Возвращает список рецептов с использованием пагинации.
-     *
-     * @param offset сколько записей пропустить.
-     * @param limit  сколько записей вернуть.
-     * @return список рецептов.
      */
     public List<Recipe> getRecipesWithLimitOffset(int offset, int limit) {
         int page = offset / limit; // Рассчитываем номер страницы.
