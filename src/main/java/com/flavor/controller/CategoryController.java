@@ -2,6 +2,9 @@ package com.flavor.controller;
 
 import com.flavor.model.Category;
 import com.flavor.service.CategoryService;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,4 +34,14 @@ public class CategoryController {
         return categoryService.getCategoryById(id)
         .   orElseThrow(() -> new RuntimeException("Категория не найдена"));
     }
+
+    @ControllerAdvice
+    public class GlobalExceptionHandler {
+
+        @ExceptionHandler(RuntimeException.class)
+        public ResponseEntity<String> handleRuntimeException(RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
 }

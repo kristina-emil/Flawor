@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Category {
 
@@ -17,6 +19,7 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category") // Связь один ко многим с рецептами
+    @JsonManagedReference
     private List<Recipe> recipes;
 
     public Category() {

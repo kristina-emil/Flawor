@@ -1,11 +1,15 @@
 package com.flavor.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.CascadeType;
+
 
 @Entity
 public class Recipe {
@@ -17,8 +21,9 @@ public class Recipe {
     private String name;
     private String description;
 
-    @ManyToOne // Связь "многие к одному" с категорией
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id", nullable = false)
+    @JsonBackReference
     private Category category;
 
     public Recipe() {
