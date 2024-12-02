@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const recipeTableBody = document.querySelector(".recipe-table tbody");
     const createRecipeBtn = document.getElementById("create-recipe");
+    const viewRecipesBtn = document.getElementById("view-recipes");
+    const recipeTableContainer = document.getElementById("recipe-table-container");
 
     // Загрузка рецептов
     const loadRecipes = async () => {
@@ -76,6 +78,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         } catch (err) {
             console.error('Ошибка создания рецепта:', err);
+        }
+    });
+
+    // Обработчик для кнопки "Посмотреть"
+    viewRecipesBtn.addEventListener("click", () => {
+        if (recipeTableContainer.classList.contains("hidden")) {
+            recipeTableContainer.classList.remove("hidden"); // Показать таблицу рецептов
+            loadRecipes(); // Загрузить рецепты
+        } else {
+            recipeTableContainer.classList.add("hidden"); // Скрыть таблицу рецептов
         }
     });
 

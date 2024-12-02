@@ -1,6 +1,8 @@
 package com.flavor.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,10 +10,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.CascadeType;
-
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Recipe {
 
     @Id
@@ -21,9 +22,8 @@ public class Recipe {
     private String name;
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    @JsonBackReference
     private Category category;
 
     public Recipe() {
@@ -65,5 +65,10 @@ public class Recipe {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @JsonProperty("categoryId")
+    public Long getCategoryId() {
+        return category != null ? category.getId() : null;
     }
 }
