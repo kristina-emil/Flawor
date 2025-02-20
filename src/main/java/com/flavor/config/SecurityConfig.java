@@ -16,16 +16,18 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            .csrf().disable()
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/admin/**").hasRole("ADMIN") 
-                .requestMatchers("/user/**").hasAnyRole("ADMIN", "USER") 
-                .anyRequest().authenticated()  
+            .requestMatchers("/login", "/oauth2/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+                .anyRequest().authenticated()
             )
-            .formLogin(form -> form
-                .loginPage("/login")  
-                .permitAll()         
+            .oauth2Login(oauth2 -> oauth2
+                .loginPage("/login")
+                .defaultSuccessUrl("/home", true) // Перенаправление после успешного входа
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
