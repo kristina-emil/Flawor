@@ -54,7 +54,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        String jwkSetUri = "http://localhost:8080/realms/flavor_realm/protocol/openid-connect/certs"; // Замените URL на ваш сервер Keycloak
+        String jwkSetUri = "http://localhost:8081/realms/flavor_realm/protocol/openid-connect/certs"; // Замените URL на ваш сервер Keycloak
         return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
     }
 
@@ -66,13 +66,13 @@ public class SecurityConfig {
     private ClientRegistration keycloakClientRegistration() {
         return ClientRegistration.withRegistrationId("keycloak")
                 .clientId("flavor-app")
-                .clientSecret("RCd09V8PQksXOzSqHq44Q5L6HU352yWy")
+                .clientSecret("esfj0yKbKDH4aocufbcZGgJuDVi8c2lL")
                 .scope("openid")
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .authorizationUri("http://localhost:8080/realms/flavor-realm/protocol/openid-connect/auth")
-                .tokenUri("http://localhost:8080/realms/flavor-realm/protocol/openid-connect/token")
-                .userInfoUri("http://localhost:8080/realms/flavor-realm/protocol/openid-connect/userinfo")
-                .redirectUri("http://localhost:8080/login/oauth2/code/keycloak")  // Это URI для получения авторизационного кода
+                .authorizationUri("http://localhost:8081/realms/flavor-realm/protocol/openid-connect/auth")
+                .tokenUri("http://localhost:8081/realms/flavor-realm/protocol/openid-connect/token")
+                .userInfoUri("http://localhost:8081/realms/flavor-realm/protocol/openid-connect/userinfo")
+                .redirectUri("http://localhost:8081/login/oauth2/code/keycloak")  // Это URI для получения авторизационного кода
                 .clientName("Keycloak")
                 .build();
     }
