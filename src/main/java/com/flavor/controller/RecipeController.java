@@ -59,4 +59,15 @@ public class RecipeController {
     ) {
         return recipeService.getRecipesWithLimitOffset(offset, limit);
     }
+
+    // Методы перенаправления
+    @GetMapping("/redirectAdmin")
+    public String redirectToAdmin() {
+        return "redirect:/recipes"; // Перенаправляем на /recipes (главная страница рецептов)
+    }
+
+    @GetMapping("/redirectUser")
+    public String redirectToUser() {
+        return "redirect:/categories"; // Перенаправляем на /categories (страница категорий)
+    }
 }

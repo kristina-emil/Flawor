@@ -2,7 +2,6 @@ package com.flavor.controller;
 
 import com.flavor.model.Category;
 import com.flavor.service.CategoryService;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,13 @@ public class CategoryController {
     @GetMapping("/{id}")
     public Category getCategoryById(@PathVariable Long id) {
         return categoryService.getCategoryById(id)
-        .   orElseThrow(() -> new RuntimeException("Категория не найдена"));
+                .orElseThrow(() -> new RuntimeException("Категория не найдена"));
+    }
+
+    // Метод перенаправления
+    @GetMapping("/redirectToCategoryPage")
+    public String redirectToCategoryPage() {
+        return "redirect:/categories";  // Перенаправляем на страницу категорий
     }
 
     @ControllerAdvice
@@ -43,5 +48,4 @@ public class CategoryController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-
 }

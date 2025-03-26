@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.http.HttpMethod;
+
 
 import com.flavor.security.KeycloakAuthSuccessHandler;
 
@@ -31,13 +33,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests()
-                .anyRequest().authenticated()
-            .and()
-            .oauth2Login()
-                .successHandler(keycloakAuthSuccessHandler)  // Устанавливаем кастомный обработчик успеха
-                .failureUrl("/login?error");
-        
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll()  // Разрешаем ВСЕ запросы без авторизации
+            )
+            .csrf(csrf -> csrf.disable())  // Отключаем CSRF (если не используете формы)
+            .oauth2Login(oauth2 -> oauth2
+                .successHandler(keycloakAuthSuccessHandler)
+                .failureUrl("/login?error")
+            );
+
         return http.build();
     }
 

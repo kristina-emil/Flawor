@@ -20,8 +20,11 @@ public class KeycloakAuthSuccessHandler implements AuthenticationSuccessHandler 
         // Получаем имя пользователя
         String username = authentication.getName();
 
-        // Если имя пользователя "admin", перенаправляем его на страницу админки
-        if ("admin".equals(username)) {
+        // Получаем email из аутентификации (может быть в "preferred_username" или "email")
+        String email = (String) authentication.getCredentials();
+
+        // Пример: если email или имя пользователя "admin", перенаправляем на админку
+        if ("admin".equals(username) || "kristina-emil@mail.ru".equals(email)) {
             response.sendRedirect("/admin/category");
         } else {
             // Для всех остальных пользователей перенаправляем на стандартную страницу
