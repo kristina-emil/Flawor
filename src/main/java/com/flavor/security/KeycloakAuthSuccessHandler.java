@@ -1,8 +1,9 @@
 package com.flavor.security;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -12,23 +13,28 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Component // Добавляем аннотацию Component
+@Component
 public class KeycloakAuthSuccessHandler implements AuthenticationSuccessHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(KeycloakAuthSuccessHandler.class);
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        // Получаем имя пользователя
-        String username = authentication.getName();
+        // Получаем роли пользователя
+        Set<String> roles = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toSet());
 
-        // Получаем email из аутентификации (может быть в "preferred_username" или "email")
-        String email = (String) authentication.getCredentials();
+        // Логируем роли
+        logger.info("Пользователь {} вошел в систему с ролями: {}", authentication.getName(), roles);
 
-        // Пример: если email или имя пользователя "admin", перенаправляем на админку
-        if ("admin".equals(username) || "kristina-emil@mail.ru".equals(email)) {
+        if (roles.contains("ROLE_ADMIN")) {
             response.sendRedirect("/admin/category");
-        } else {
-            // Для всех остальных пользователей перенаправляем на стандартную страницу
+        } else if (roles.contains("ROLE_USER")) {
             response.sendRedirect("/user/index");
+        } else {
+            response.sendRedirect("/access-denied"); // Если у пользователя нет подходящей роли
         }
     }
 }
+
