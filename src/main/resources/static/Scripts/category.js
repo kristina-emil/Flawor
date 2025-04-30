@@ -27,10 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', async (e) => {
                     const id = e.target.dataset.id;
-                    await fetch(`${API_URL_CATEGORIES}/${id}`, { method: 'DELETE' });
-                    loadCategories(); // Перезагрузить категории
+                    // Используйте правильный URL для удаления рецепта
+                    await fetch(`${API_URL_RECIPES}/${id}`, { method: 'DELETE' });
+                    loadRecipes(currentOffset); // Перезагрузить рецепты после удаления
                 });
-            });
+            });            
         } catch (err) {
             console.error("Ошибка загрузки категорий:", err);
         }
@@ -48,6 +49,22 @@ document.addEventListener("DOMContentLoaded", () => {
             loadCategories(); // Перезагрузить категории
         }
     });
+
+    const runImportBtn = document.getElementById("run-import");
+
+    runImportBtn.addEventListener("click", async () => {
+        try {
+            const response = await fetch("http://localhost:8080/api/import/run", {
+                method: "POST"
+            });
+            const result = await response.text();
+            alert("✅ " + result);
+        } catch (error) {
+            console.error("Ошибка запуска импорта:", error);
+            alert("❌ Не удалось запустить импорт");
+        }
+    });
+
 
     // Загрузить категории при загрузке страницы
     loadCategories();

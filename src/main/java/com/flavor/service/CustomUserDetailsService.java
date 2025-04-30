@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.flavor.model.User; // Ваша сущность
 import com.flavor.model.Role;
 import com.flavor.repository.UserRepository;
 

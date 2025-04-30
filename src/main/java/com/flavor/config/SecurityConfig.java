@@ -1,5 +1,6 @@
 package com.flavor.config;
 
+import org.springframework.http.HttpMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -32,27 +33,33 @@ public class SecurityConfig {
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-            .oauth2Login(Customizer.withDefaults())
-            .logout(logout -> logout
-                .logoutUrl("/logout") // URL для выхода
-                .logoutSuccessHandler((request, response, authentication) -> {
-                    String logoutUrl = "http://localhost:8081/realms/flavor-realm/protocol/openid-connect/logout?redirect_uri=http://localhost:8080/";
-                    response.sendRedirect(logoutUrl);
-                })
-                .invalidateHttpSession(true) // Удаление HTTP-сессии
-                .deleteCookies("JSESSIONID", "KEYCLOAK_IDENTITY", "KEYCLOAK_SESSION") // Удаление куков
-                .clearAuthentication(true) // Очистка аутентификации
-            )
-            .authorizeHttpRequests(c -> c
-                .requestMatchers("/error").permitAll()
-                .anyRequest().authenticated()
-            );
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+            http
+                .csrf(csrf -> csrf.disable())
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+                .oauth2Login(Customizer.withDefaults())
+                .logout(logout -> logout
+                    .logoutUrl("/logout")
+                    .logoutSuccessHandler((request, response, authentication) -> {
+                        String logoutUrl = "http://localhost:8081/realms/flavor-realm/protocol/openid-connect/logout?redirect_uri=http://localhost:8080/";
+                        response.sendRedirect(logoutUrl);
+                    })
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID", "KEYCLOAK_IDENTITY", "KEYCLOAK_SESSION")
+                    .clearAuthentication(true)
+                )
+                .authorizeHttpRequests(c -> c
+                    .requestMatchers("/error").permitAll()
+                    .requestMatchers("/admin/category/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/recipes/**").authenticated()
+                    .requestMatchers(HttpMethod.POST, "/recipes").authenticated()
+                    .requestMatchers(HttpMethod.DELETE, "/recipes/**").authenticated()
+                    .anyRequest().authenticated()
+                );
 
-        return http.build();
-    }
+            return http.build();
+        }
+
 
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {

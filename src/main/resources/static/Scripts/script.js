@@ -6,11 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const createRecipeBtn = document.getElementById("create-recipe");
     const viewRecipesBtn = document.getElementById("view-recipes");
     const recipeTableContainer = document.getElementById("recipe-table-container");
+    const nextPageBtn = document.getElementById("next-page");
+    const prevPageBtn = document.getElementById("prev-page");
 
-    // Загрузка рецептов
-    const loadRecipes = async () => {
+    let currentOffset = 0; // Текущая страница
+    const limit = 100; // Количество рецептов на странице
+
+    // Загрузка рецептов с пагинацией
+    const loadRecipes = async (offset) => {
         try {
-            const response = await fetch(API_URL_RECIPES);
+            const response = await fetch(`${API_URL_RECIPES}?offset=${offset}&limit=${limit}`);
             const recipes = await response.json();
             recipeTableBody.innerHTML = ''; // Очистить таблицу
             recipes.forEach((recipe, index) => {
@@ -32,9 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 button.addEventListener('click', async (e) => {
                     const id = e.target.dataset.id;
                     await fetch(`${API_URL_RECIPES}/${id}`, { method: 'DELETE' });
-                    loadRecipes();
+                    loadRecipes(currentOffset); // Перезагрузить рецепты после удаления
                 });
             });
+
         } catch (err) {
             console.error('Ошибка загрузки рецептов:', err);
         }
@@ -74,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         category: { id: selectedCategory.id }
                     }),
                 });
-                loadRecipes();
+                loadRecipes(currentOffset); // Перезагрузить рецепты после добавления
             }
         } catch (err) {
             console.error('Ошибка создания рецепта:', err);
@@ -85,12 +91,26 @@ document.addEventListener("DOMContentLoaded", () => {
     viewRecipesBtn.addEventListener("click", () => {
         if (recipeTableContainer.classList.contains("hidden")) {
             recipeTableContainer.classList.remove("hidden"); // Показать таблицу рецептов
-            loadRecipes(); // Загрузить рецепты
+            loadRecipes(currentOffset); // Загрузить рецепты
         } else {
             recipeTableContainer.classList.add("hidden"); // Скрыть таблицу рецептов
         }
     });
 
+    // Обработчик кнопки "Следующая страница"
+    nextPageBtn.addEventListener("click", () => {
+        currentOffset += limit; // Увеличиваем offset
+        loadRecipes(currentOffset); // Загружаем следующие рецепты
+    });
+
+    // Обработчик кнопки "Предыдущая страница"
+    prevPageBtn.addEventListener("click", () => {
+        if (currentOffset >= limit) {
+            currentOffset -= limit; // Уменьшаем offset
+            loadRecipes(currentOffset); // Загружаем предыдущие рецепты
+        }
+    });
+
     // Загрузить данные при загрузке страницы
-    loadRecipes();
+    loadRecipes(currentOffset);
 });
