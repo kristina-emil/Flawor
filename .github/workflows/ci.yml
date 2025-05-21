@@ -46,7 +46,7 @@ jobs:
     
     - name: Install Prometheus
       run: |
-          chmod +x ./bin/kc.sh
+          chmod +x ./install-prometheus.sh
           ./install-prometheus.sh
 
     - name: Start Keycloak (dev mode)
