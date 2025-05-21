@@ -58,7 +58,7 @@ jobs:
 
     - name: Start monitoring services
       run: |
-        cd server/monitoring
+        cd monitoring
         docker-compose down
         docker-compose up -d
         sleep 20  # ждем запуска
