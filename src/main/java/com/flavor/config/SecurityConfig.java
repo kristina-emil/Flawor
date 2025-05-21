@@ -37,8 +37,8 @@ public class SecurityConfig {
             http
                 .csrf(csrf -> csrf.disable())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-                .oauth2Login(Customizer.withDefaults())
-                .logout(logout -> logout
+                .oauth2Login(Customizer.withDefaults());
+                /*.logout(logout -> logout
                     .logoutUrl("/logout")
                     .logoutSuccessHandler((request, response, authentication) -> {
                         String logoutUrl = "http://localhost:8081/realms/flavor-realm/protocol/openid-connect/logout?redirect_uri=http://localhost:8080/";
@@ -55,7 +55,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/recipes").authenticated()
                     .requestMatchers(HttpMethod.DELETE, "/recipes/**").authenticated()
                     .anyRequest().authenticated()
-                );
+                );*/
 
             return http.build();
         }
@@ -106,7 +106,7 @@ public class SecurityConfig {
     private ClientRegistration keycloakClientRegistration() {
         return ClientRegistration.withRegistrationId("keycloak")
                 .clientId("flavor-app-id")
-                .clientSecret("fST9RyVqJ2WbutQvokmCKGlAroRW3XJy")
+                .clientSecret("pxBkqMR5LtElEyYDmvoDU5EBUYPukqgM")
                 .scope("openid")
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationUri("http://localhost:8081/realms/flavor-realm/protocol/openid-connect/auth")

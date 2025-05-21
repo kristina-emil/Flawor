@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блюда из TheMealDB</title>
+    <link rel="stylesheet" href="@{/styles/meals.css}">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Поиск блюд</h2>
+        <input type="text" id="searchInput" placeholder="Введите название блюда..." />
+        <button onclick="searchMeal()">🔍 Искать</button>
+        <button onclick="fetchRandomMeal()">🎲 Случайное блюдо</button>
+
+        <div id="meal-container">
+            <p>Здесь появится информация о блюде...</p>
+        </div>
+    </div>
+
+    <script src="@{/Scripts/mealc.js}"></script>
+
+</body>
+</html>

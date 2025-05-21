@@ -1,2 +1,4 @@
 /mvnw text eol=lf
 *.cmd text eol=crlf
+prometheus/promtool filter=lfs diff=lfs merge=lfs -text
+prometheus/prometheus filter=lfs diff=lfs merge=lfs -text

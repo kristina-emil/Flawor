@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignore Prometheus binaries
+prometheus/prometheus
+prometheus/promtool
+prometheus/
