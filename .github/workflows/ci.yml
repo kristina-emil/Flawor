@@ -51,7 +51,7 @@ jobs:
 
     - name: Start Keycloak (dev mode)
       run: |
-        cd server/keycloak
+        cd keycloak
         chmod +x ./bin/kc.sh
         nohup ./bin/kc.sh start-dev --http-port=8081 > keycloak.log 2>&1 &
         sleep 30  # ждем запуска
