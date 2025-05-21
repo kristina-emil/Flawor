@@ -61,7 +61,6 @@ jobs:
         cd monitoring
         docker-compose down
         docker-compose up -d
-        sleep 20  # ждем запуска
 
     - name: Compile and run tests
       run: mvn clean verify
