@@ -18,12 +18,18 @@
 
     <modelVersion>4.0.0</modelVersion>
     <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/kristina-emil/Flawor</url>
-        </repository>
+    <repository>
+        <id>github</id>
+        <name>GitHub Packages</name>
+        <url>https://maven.pkg.github.com/kristina-emil/Flawor</url>
+    </repository>
+    <snapshotRepository>
+        <id>github</id>
+        <name>GitHub Packages</name>
+        <url>https://maven.pkg.github.com/kristina-emil/Flawor</url>
+    </snapshotRepository>
     </distributionManagement>
+
 
     <properties>
         <java.version>17</java.version>
