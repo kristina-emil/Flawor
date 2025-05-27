@@ -1,0 +1,5 @@
+<server>
+  <id>github</id> 
+  <username>kristina-emil</username>
+  <password>${{ secrets.GH_PACKAGES_TOKEN }}</password>
+</server>
